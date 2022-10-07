@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'MICEGothic Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+*{
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	list-style: none;
+	color: black;
+	font-family: '맑은 고딕';
+}
+
+.webbox{
+	width: 1200px;
+	margin: 0 auto;
+}
+.hd_top{
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0 20px 0;
+}
+.hd_sub{
+	display: flex;
+	font-size: 12px;
+	align-items: center;
+}
+.hd_sub li{
+	margin-left: 20px;
+}
+.hd_title a{
+	font-family: "MICEGothic Bold";
+	font-size: 40px;
+}
+
+/*---------------------------------*/
+
+.hd_menu{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.searchbox input{
+	border: none;
+}
+.searchbox span{
+	border-bottom: solid 2px black;
+	margin: 0 20px 0 150px;
+}
+.fa-search, fa-shopping-cart{
+	font-size: 20px;
+}
+
+.hd_menu li:nth-child(1) a {
+	color: red;
+	font-weight: bold;
+}
+.hd_menu li:nth-child(2) a {
+	color: blue;
+	font-weight: bold;
+}
+.hd_menu li:nth-child(10) a {
+	color: grey;
+	font-weight: bold;
+}
+.hd_menu li:nth-child(11) a {
+	color: skyblue;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
