@@ -1,6 +1,173 @@
+/*
+	정규 표현식 : 문자 특정규칙, 패턴, 집합 표현할때 사용되는 언어
+	
+	/^ : 정규표현식 시작
+	$/ : 정규표현식 끝
+	[a-z] : 소문자 패턴
+	[A-Z] : 대문자 패턴
+	[0-9] : 숫자 패턴
+	[가-힣] : 한글 패턴
+	{ 최소길이, 최대길이} : 문자열 길이 패턴
+	+ : 앞에 있는 패턴 1개 이상 반복
+	? : 앞에 있는 패턴 0개 혹은 1개 이상 반복
+	* : 앞에 있는 패턴 0개 반복
+		(?=.*[a-z]) : 최소 한개 이상의 소문자 영문
+		(?=.*[A-Z]) : 최소 한개 이상의 대문자 영문
+		(?=.*[0-9]) : 최소 한개 이상의 숫자		(?=.*\d) : 최소 한개 이상의 숫자
+		(?=.*[!@#$%^&*()_]) : 최소 한개 이상의 특수문자
+
+	검사 : 정규표현식.test( 데이터 ) : 맞으면 true, false
+
+	1. /^[a-z0-9]{5,20}$/ 								: 소문자/숫자 5~20글자 패턴
+	2. /^[a-zA-Z0-9]{8,20}$/ 							: 영대소문자/숫자 조합 8~20 글자 패턴
+	3. /^[a-zA-Z가-힣]{2,20}$/ 							: 영대소문자/한글 조합 2~20 글자 패턴
+	4. /^([0-9]{2,3})-([0-9]{3,4})-([0-9]{2,3})$/		: 숫자2~3 - 숫자3~4 - 숫자3~4 패턴
+	5. /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]$/	: 영대소문자/숫자 @ 영대소문자/숫자 . 영대소문자/숫자
+*/
+// 아이콘
+let sicon = '<i class="fas fa-check-circle"></i>'
+let bicon = '<i class="fas fa-ban"></i>'
+// col3 div 모두 가져오기
+let col3 = document.querySelectorAll('.col3') // class가 col3 이면 모두 호출 [ ALL -> 배열 ]
+
+/*----- 아이디 -------------------------------*/
+function mevent1() {									// 아이디를 입력[keyup]하면 이벤트 발생 = 함수 실행
+	let mid = document.querySelector("#mid").value		// 1. 입력받은 아이디 호출
+	let midj = /^[a-z0-9]{5,20}$/						// 2. 정규표현식 작성
+	if(midj.test(mid)){ // 정규표현식이 동일하면				// 3. 정규표현식 검사
+		
+		$.ajax({ // 아이디 중복체크 [ 비동기식 ]				// 4. 아이디 중복체크 [ 비동기식 - ajax ]
+			url : "http://localhost:8080/jspweb/member/idcheck",
+			data : { "mid" : mid },
+			success : function(re) {					// 5. 중복체크 결과(re)
+				if(re === 'true') {
+					col3[0].innerHTML = bicon + "사용중인 아이디"					
+				} else {
+					col3[0].innerHTML = sicon
+				}
+			}
+		})
+	}else{
+		col3[0].innerHTML = bicon + "소문자/숫자 조합 5~20글자" // 정규표현식이 다르면
+	}
+}
+/*----- 비밀번호 -------------------------------*/
+function mevent2() {
+	let mpassword = document.querySelector("#mpassword").value
+	let mpasswordj = /^[a-zA-Z0-9]{8,20}$/
+	
+	if(mpasswordj.test(mpassword)) {
+		col3[1].innerHTML = sicon; mevent3();
+	} else {
+		col3[1].innerHTML = bicon + "영대소문자/숫자 조합 8~20글자"
+	}
+}
+/*----- 비밀번호 확인 -------------------------------*/
+function mevent3() {
+	let mpassword = document.querySelector("#mpassword").value
+	let mpasswordconfirm = document.querySelector("#mpasswordconfirm").value
+	let mpasswordj = /^[a-zA-Z0-9]{8,20}$/
+	
+	if(!mpasswordj.test(mpasswordconfirm)) { // 정규표현식이 다르면
+		col3[1].innerHTML = bicon + "영대소문자/숫자 조합 8~20글자"
+	} else if(mpasswordconfirm != mpassword) { // 두 비밀번호가 다르면
+		col3[1].innerHTML = bicon + "비밀번호가 서로 다릅니다."
+	} else { // 정규표현식 맞고 두 비밀번호 맞으면
+		col3[1].innerHTML = sicon; mevent2();
+	}
+}
+/*----- 이름 -------------------------------*/
+function mevent4() {
+	let mname = document.querySelector("#mname").value
+	let mnamej = /^[a-zA-Z가-힣]{2,20}$/
+	if(mnamej.test(mname)) {
+		col3[2].innerHTML = sicon
+	} else {
+		col3[2].innerHTML = bicon + "영대소문자 혹은 한글 2~20글자"
+	}
+}
+/*----- 전화번호 -------------------------------*/
+function mevent5() {
+	let mphone = document.querySelector("#mphone").value
+	let mphonej = /^([0-9]{2,3})-([0-9]{3,4})-([0-9]{3,4})$/
+	if(mphonej.test(mphone)) {
+		col3[3].innerHTML = sicon
+	} else {
+		col3[3].innerHTML = bicon + "지역번호-xxxx-xxxx 형식"
+	}
+}
+/*----- 이메일 -------------------------------*/
+function mevent6() {
+	let memail = document.querySelector("#memail").value
+	let memailj = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
+	if(memailj.test(memail)) {
+		
+		$.ajax({
+			url : "http://localhost:8080/jspweb/member/emailcheck",
+			data : { "memail" : memail },
+			success : function(re) {
+				if( re === "true" ) {
+					col3[4].innerHTML = bicon + "사용중인 이메일 입니다."
+				} else {
+					col3[4].innerHTML = sicon
+				}
+			}
+		})
+	} else {
+		col3[4].innerHTML = bicon + "이메일 형식으로 입력해주세요"
+	}
+}
+/*----- 주소 -------------------------------*/
+let sample4_postcode = document.querySelector("#sample4_postcode")
+let sample4_roadAddress = document.querySelector("#sample4_roadAddress")
+let sample4_jibunAddress = document.querySelector("#sample4_jibunAddress")
+let sample4_detailAddress = document.querySelector("#sample4_detailAddress")
+
+function addresscheck(e) {
+	let a = e.target.value;
+	if(a.indexOf(",") !== -1) {
+		col3[5].innerHTML = bicon + "주소에 ,[쉼표] 입력 불가능"
+	} else {
+		col3[5].innerHTML = sicon;
+	}
+}
+
+sample4_postcode.addEventListener('change', addresscheck) // change 된 객체의 정보를 addresscheck함수에 전달
+sample4_roadAddress.addEventListener('change', addresscheck)
+sample4_jibunAddress.addEventListener('change', addresscheck)
+sample4_detailAddress.addEventListener('change', addresscheck)
+/*
+	tag객체명.addEventListener('이벤트명', 함수(매개변수))
+	tag객체명.addEventListener('이벤트명', function(매개변수){})
+	tag객체명.addEventListener('이벤트명', 매개변수 => {})
+	
+	문자열.indexOf(찾을문자) : 해당 문자열에 찾을문자의 인덱스 번호 [ -1 : 없다 ]
+*/
+
+function formsubmit() {
+	for(let i = 0 ; i<=5 ; i++) {
+		if(col3[i].innerHTML !== sicon){
+			alert("입력이 안된 정보가 있습니다.")
+			return false;
+		}
+	}
+	if(document.querySelector("#confirm1").checked == false){
+		// tag객체명.checked	: 체크가 되어있으면 true 아니면 false
+		alert("이용약관에 동의해주세요")
+		return false;
+	}
+	if(document.querySelector("#confirm2").checked == false){
+		alert("개인정보 수집에 동의해주세요")
+		return false;
+	}
+	document.querySelector(".signupform").submit();
+	// signupform 이라는 class를 가지고 있는 tag 호출 후 .submit()으로 전송
+}
+
+/*----- 회원가입 전송확인 -------------------------------*/
+
 /* 카카오 우편 api */
    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-   alert('saddfs');
 function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {

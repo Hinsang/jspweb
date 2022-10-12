@@ -25,10 +25,24 @@
 				</span>
 			</div>
 			
+			<!-- 세션 호출 [ JSP = 템플릿마다 다름 ( JSP VS 리액트 ) ] -->
+			<%
+				// JSP 스크립트 태그 (태그안에 JAVA 문법 작성 가능)
+					// jsp 기본 객체로 세션객체 제공
+				String loginid = (String)session.getAttribute("mid");
+								// 형변환 : 세션자료형 = object
+			%>
+			
 			<ul class="hd_sub">
-				<li><a href="/jspweb/member/login.jsp">로그인</a></li>
-				<li><a href="/jspweb/member/signup.jsp">회원가입</a></li>
-				<li><a href="#">마이쇼핑</a></li>
+			<%	if( loginid == null ) {	%>
+					<li><a href="/jspweb/member/login.jsp">로그인</a></li>
+					<li><a href="/jspweb/member/signup.jsp">회원가입</a></li>
+			<%	} else {	%>
+					<li><%=loginid %>님 안녕하세요</li>
+					<li><a href="/jspweb/member/logout.jsp">로그아웃</a></li>
+			<%	}	%>
+				
+				<li><a href="/jspweb/member/info.jsp">마이쇼핑</a></li>
 				<li><a href="#">고객센터</a></li>
 			</ul>
 		</div>

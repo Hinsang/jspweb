@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.MemberDao;
 
@@ -45,8 +46,14 @@ public class login extends HttpServlet {
 		String mid = request.getParameter("mid");
 		String mpassword = request.getParameter("mpassword");
 		
-		int result 
-		=  MemberDao.getInstance().login(mid, mpassword);
+		int result =  MemberDao.getInstance().login(mid, mpassword);
+		
+		// 만약에 로그인 성공하면 세션 할당
+		if(result == 1) {			
+			HttpSession 세션 = request.getSession();	// 1. 세션 객체 선언
+			세션.setAttribute("mid", mid);			// 2. 세션 생성[ 세션 메모리 할당 ]
+		}
+		
 		// 4. 결과 제어 [ true이면 index.jsp  false 이면 login.jsp ]
 		response.getWriter().print(result);
 	}

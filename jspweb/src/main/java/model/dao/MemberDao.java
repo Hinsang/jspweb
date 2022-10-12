@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.util.ArrayList;
+
 import model.dto.MemberDto;
 
 public class MemberDao extends Dao {
@@ -99,15 +101,153 @@ public class MemberDao extends Dao {
 		return false;
 	}
 
+	// 회원정보 호출
+	public MemberDto getinfo( String mid ) {
+		MemberDto dto = null;
+		String sql = "select * from member where mid = ?";		
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			rs = ps.executeQuery();
+			if( rs.next() ) {
+				
+				// 풀 생성자
+				dto = new MemberDto(
+						rs.getInt(1), rs.getString(2), null, 
+						rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getString(7),
+						rs.getString(8), rs.getInt(9)
+						);
+				
+				// 빈 생성자
+//				dto = new MemberDto();
+//				dto.setMno( rs.getInt(1) );
+//				dto.setMid( rs.getString(2) );
+//				// 패스워드 제외
+//				dto.setMname( rs.getString(4) );
+//				dto.setMphone( rs.getString(5) );
+//				dto.setMemail( rs.getString(6) );
+//				dto.setMaddress( rs.getString(7) );
+//				dto.setMdate( rs.getString(8) );
+//				dto.setMpoint( rs.getInt(9) );
+				return dto;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return dto;
+	}
 	
+	// 모든 회원 호출
+	public ArrayList<MemberDto> getinfolist() {
+		ArrayList<MemberDto> list = new ArrayList<>();
+		String sql = "select * from member";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while( rs.next() ) {
+				MemberDto dto = new MemberDto(
+						rs.getInt(1), rs.getString(2), null, 
+						rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getString(7),
+						rs.getString(8), rs.getInt(9)
+						);
+				list.add(dto);
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return list;
+	}
 	
+	// 회원탈퇴
+	public boolean delete( String mid, String mpassword ) {
+		String sql = "delete from member where mid = ? and mpassword = ? ";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			ps.setString(2, mpassword);
+			int count = ps.executeUpdate(); // 삭제 레코드 수 반환
+			if(count == 1) {
+				return true;
+				// 삭제된 리코드가 1개이면 성공
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 	
+	// 아이디 중복체크
+	public boolean idcheck( String mid ) {
+		String sql = "select * from member where mid = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			ps.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 	
+	// 이메일 중복체크
+	public boolean emailcheck( String memail ) {
+		String sql = "select * from member where memail = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, memail);
+			ps.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 	
+	// 회원정보 수정
 	
-	
-	
-	
+	public boolean update(String mid, String mname) {
+		String sql = "update member set mname = ? where mid = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mname);
+			ps.setString(2, mid);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println();
+		}
+		return false;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
