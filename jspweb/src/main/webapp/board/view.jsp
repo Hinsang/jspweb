@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body>
 	<%@include file="../header.jsp" %>
@@ -42,8 +42,14 @@
 			<tr> <td> 번호 <td> 	<td class="bno"> 		</td> </tr>
 			<tr> <td> 제목 <td> 	<td class="btitle">  	</td> </tr>
 			<tr> <td> 내용 <td> 	<td class="bcontent"> 	</td> </tr>
-			<tr> <td> 작성자 <td> <td class="mno"> 		</td> </tr>
+			<tr> <td> 작성자 <td> <td class="mid"> 		</td> </tr>
+			<tr> <td> 첨부파일 <td> <td class="bfile"> 		</td> </tr>
 		</table>
+		
+		<div class="btnbox">
+			<a href="list.jsp"><button>목록보기</button></a>
+		</div>
+		
 	</div>
 	
 	<script type="text/javascript" src="../JS/board/view.js"></script>

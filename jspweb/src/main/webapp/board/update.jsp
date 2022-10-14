@@ -15,19 +15,7 @@
 	<% if( loginid == null ) response.sendRedirect("http://localhost:8080/jspweb/member/login.jsp");  %>
 	
 	<div class="webbox">
-		<h3> 글쓰기 </h3>
-		
-		<!-- 1. form = [페이지전환O]  2. ajax = [페이지전환X]  선택  -->
-		<!-- 1.  -->  
-		<!--
-		<form method="get" action="http://localhost:8080/jspweb/board/write">
-			제목 : <input type="text" name="btitle"> <br>
-			내용 : <input type="text" name="bcontent">
-			<button type="submit">쓰기</button>
-		</form>
-		 -->
-		 
-		<!--  2.  -->
+		<h3> 수정 </h3>
 		<form>
 			제목 : <input type="text" name="btitle"> <br>
 			
@@ -35,7 +23,7 @@
 			<textarea id="summernote" name="bcontent"></textarea>
 			첨부파일 : <input type="file" name ="bfile"> <br>
 			<!-- form 태그 안에서 button 사용시에는 type 필수 넣기 -->
-			<button type="button" onclick="bwrite()">쓰기</button>
+			<button type="button" onclick="bupdate()">수정</button>
 		</form>
 	</div>
 	<!-- 썸머노트 API js -->
@@ -45,7 +33,7 @@
 	<script src="lang/summernote-ko-KR.js"></script>
 	
 	<!-- 사용자정의 js -->
-	<script type="text/javascript" src="../JS/board/write.js"></script>
+	<script type="text/javascript" src="../JS/board/update.js"></script>
 	
 	
 
