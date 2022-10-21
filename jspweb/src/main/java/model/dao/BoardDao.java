@@ -2,6 +2,9 @@ package model.dao;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import model.dto.BoardDto;
 
 public class BoardDao extends Dao {
@@ -26,13 +29,20 @@ public class BoardDao extends Dao {
 		return false;
 	}
 	// 2. 글출력
-	public ArrayList< BoardDto > getlist( int startrow , int listsize ) {
+	public ArrayList< BoardDto > getlist( int startrow , int listsize , String key , String keyword ) {
 		ArrayList< BoardDto > list = new ArrayList<>();
-		
-		String sql = "select b.* , m.mid from member m , board b "
-				+ "where m.mno = b.mno "
-				+ "order by b.bdate desc limit "+startrow+" , "+listsize;
-		
+		String sql = "";
+		if( !key.equals("") && !keyword.equals("") ) { // 검색이 있을경우 
+			sql = "select b.* , m.mid "
+					+ "from member m , board b "
+					+ "where m.mno = b.mno and "+key+" like '%"+keyword+"%' "
+					+ "order by b.bdate desc "
+					+ "limit "+startrow+" , "+listsize;
+		}else { // 검색이 없을경우
+			sql = "select b.* , m.mid from member m , board b "
+					+ "where m.mno = b.mno "
+					+ "order by b.bdate desc limit "+startrow+" , "+listsize;
+		}
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -135,13 +145,86 @@ public class BoardDao extends Dao {
 	}
 	
 	// 8. 전체 게시물 수 
-	public int gettotalsize() {
-		String sql = "select count(*) from board";
+	public int gettotalsize(String key, String keyword) {
+		String sql = "";
+		// 검색이 있을경우
+		if(!key.equals("") && !keyword.equals("")) {
+			sql = "select count(*) from member m, board b where m.mno = b.mno and "+key+" like '%"+keyword+"%'";			
+		} else {
+			// 검색이 없을경우
+			sql = "select count(*) from member m, board b where m.mno = b.mno";
+		}
+		
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery(); 
 			if( rs.next() ) return rs.getInt(1);
 		}catch (Exception e) {System.out.println(e);} return 0;
+	}
+
+	// 9. 댓글 작성 
+	public boolean rwrite( String rcontent , int mno , int bno ) {
+		String sql = "insert into reply( rcontent , mno , bno ) values( ? , ? , ? )";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString( 1 , rcontent ); ps.setInt( 2 , mno ); ps.setInt( 3 , bno );
+			ps.executeUpdate(); return true;
+		}catch (Exception e) {System.out.println(e);} return false;
+	}
+
+	// 9. 댓글 작성 
+	public boolean rrwrite( String rcontent , int mno , int bno, int rindex ) {
+		String sql = "insert into reply( rcontent , mno , bno , rindex ) values( ? , ? , ? , ? )";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString( 1 , rcontent ); 	ps.setInt( 2 , mno );
+			ps.setInt( 3 , bno );			ps.setInt( 4 , rindex );
+			ps.executeUpdate(); return true;
+		}catch (Exception e) {System.out.println(e);} return false;
+	}
+	
+	// 10. 댓글 호출
+	public JSONArray getrlist( int bno ) {
+		JSONArray array = new JSONArray();
+		String sql = "select r.rcontent, r.rdate, m.mid, r.rno "
+				+ "from reply r , member m "
+				+ "where r.mno = m.mno and r.bno = "+bno+" and r.rindex = 0 "
+				+ "order by r.rdate desc";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while( rs.next() ) {
+				JSONObject object = new JSONObject();
+				object.put( "rcontent", rs.getString(1) );
+				object.put( "rdate", rs.getString(2) );
+				object.put( "mid", rs.getString(3) );
+				object.put( "rno", rs.getInt(4) );
+				array.add(object);
+			}
+		}catch (Exception e) {} return array;
+		
+	}
+	
+	// 11. 대댓글 호출
+	public JSONArray getrrlist( int bno, int rindex ) {
+		JSONArray array = new JSONArray();
+		String sql = "select r.rcontent, r.rdate, m.mid, r.rno "
+				+ "from reply r , member m "
+				+ "where r.mno = m.mno and r.bno = "+bno+" and r.rindex = "+rindex
+				+ " order by r.rdate desc";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while( rs.next() ) {
+				JSONObject object = new JSONObject();
+				object.put( "rcontent", rs.getString(1) );
+				object.put( "rdate", rs.getString(2) );
+				object.put( "mid", rs.getString(3) );
+				object.put( "rno", rs.getInt(4) );
+				array.add(object);
+			}
+		}catch (Exception e) {} return array;
+		
 	}
 	
 }
