@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/* 기본값 여백 제거 */
+*{ padding: 0px; margin: 0px; }
+/* 사이드바 */
+.sidebar{
+	background-color: black;
+	color: white;
+	width: 200px;	/* 가로사이즈 */
+	position: absolute;
+	top : 0 ; 		/* 위에서 0만큼 떨어짐 */
+	bottom : 0; 	/* 아래에서 0만큼 떨어짐 */
+	left: -170px; 	/* 메뉴바 숨기기 */
+	transition : 0.5s	/* [애니메이션 효과] 트랜지션 ( css 변경 시간(초) ) */
+}
+/* 사이드바 목록 */
+.side_menu{ padding-left: 50px; } /* 사이드바 목록 전체 여백 */
+.side_item{ margin: 30px 0; }	/* 사이드바 목록 여백 */
+.side_menu li{ list-style: none; } /* 글머리 제거 */
+.side_item a{ color: white; text-decoration: none; } /* 링크색상 , 링크밑줄제거*/
+.sidebar h1{ padding : 20px 0px 20px 50px; } /* 사이드바 제목 */

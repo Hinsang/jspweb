@@ -36,7 +36,8 @@
 			<% if( loginid == null ){ %>
 				<li> <a href="/jspweb/member/login.jsp">로그인</a> </li>
 				<li> <a href="/jspweb/member/signup.jsp">회원가입</a></li>
-				
+			<%	}else if( loginid.equals("admin") ){  %> <!-- 로그인된 아이디가 admin이면 보이는 메뉴 -->
+				<li> <a href="/jspweb/admin/dashboard.jsp">관리자모드</a> </li>
 			<!-- 로그인 메뉴  // 세션이 존재한다.    로그인 했다..  -->
 			<%	}else{  %>
 				<li> <%=loginid %>님 안녕하세요 </li>
@@ -60,7 +61,6 @@
 			<li><a href="#"> 악세사리 </a></li>
 			<li><a href="#"> BEST </a></li>
 			<li><a href="#"> 트레이닝 </a></li>
-			<li><a href="#"> 50% 할인 </a></li>
 			<li><a href="/jspweb/board/api.jsp"> 공공데이터 </a></li>
 			<li><a href="/jspweb/board/chatting.jsp"> 채팅방 </a></li>
 			<li class="searchbox">
@@ -80,6 +80,16 @@
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </body>
 </html>
+
+<!-- 
+	헤더파일[ 모든 페이지에서 호출되는 파일 ]
+		경로 : 
+				/jspweb/board/chatting.jsp
+					/ : 최상위 경로 = http://localhost:8080/board/chatting.jsp	[o]
+				jspweb/board/chatting.jsp
+						현재 경로 = 	현재경로 /jspweb/board/chatting.jsp 	[x]
+					
+ -->
 
 
 
