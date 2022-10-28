@@ -13,6 +13,7 @@ function regist() {
 		success : function(re) {
 			if(re == 'true') {
 				alert("제품등록")
+				pagechange('list.jsp')
 			} else {
 				alert("제품등록실패")
 			}

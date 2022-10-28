@@ -23,6 +23,13 @@
 					<input type="radio" name="pcno">
 					<input type="radio" name="pcno">
 				</div>
+				
+				상태 :
+				<div class="pcategorybox">
+					판매중<input type="radio" name="pactive" value="1">
+					미판매<input type="radio" name="pactive" value="2">
+				</div>
+				
 			상품대표이미지 : <input type="file" id="pimg" name="pimg"> <br>
 			<button type="reset">취소</button> <button type="button" onclick="regist()">등록</button>
 		</form>
