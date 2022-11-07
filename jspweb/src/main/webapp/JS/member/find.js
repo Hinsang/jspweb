@@ -3,7 +3,7 @@ function findid() {
 	let memail = document.querySelector("#memail").value
 	let findidconfirmbox = document.querySelector("#findidconfirmbox")
 
-
+	alert(1)
 	// 서블릿에 데이터 보내기
 	$.ajax({
 		url : "/jspweb/member/findid",

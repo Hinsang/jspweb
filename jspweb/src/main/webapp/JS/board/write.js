@@ -20,7 +20,7 @@ function bwrite(){
 	console.log(formdata)
 	
 	$.ajax({
-		url : "http://localhost:8080/jspweb/board/write", // 서블릿주소
+		url : "/jspweb/board/write", // 서블릿주소
 		data : formdata, // ajax 기본값으로 form 전송 불가능
 
 		// 첨부파일 전송시 : 아래 코드 추가 [ 1. post방식[get방식 불가]

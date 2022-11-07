@@ -6,7 +6,7 @@ let clientsocket = null;
 if( mid != 'null'){
 	// 웹소켓에 서버소켓으로 연결[매핑]
 	clientsocket 
-	= new WebSocket('ws://localhost:8080/jspweb/chatting/'+mid);
+	= new WebSocket('ws://192.168.17.128:8080/jspweb/chatting/'+mid);
 	// 아래에서 구현 메소드를 객체에 대입
 	clientsocket.onopen = function(e){ onopen(e) }
 	clientsocket.onclose = function(e){ onclose(e) }
@@ -100,7 +100,7 @@ function onmessage(e){
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////
-	} else if ( type == 'alarm' ) {
+	} else if ( msg.type == 'alarm' ) {
 		let html = document.querySelector('.contentbox').innerHTML;
 		html += '<div class="alarm">'+
 					'<span> '+msg.content+' </span>'+

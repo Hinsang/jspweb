@@ -48,7 +48,7 @@ function bview(){
 }
 function bdelete( bno ){ // 삭제 버튼 클릭시 삭제할 번호를 인수[식별]
 	$.ajax({
-		url : "/jspweb/board/bdelete" , 
+		url : "/jspweb/board/delete" , 
 		data : { "bno" : bno } , // 삭제할 게시물의 식별번호[pk->bno]
 		success : function( re ){
 			if( re === 'true'){

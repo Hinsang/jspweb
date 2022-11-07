@@ -71,7 +71,7 @@ public class write extends HttpServlet {
 		MultipartRequest multi = new MultipartRequest(
 					request,	// 요청방식
 					uploadpath,	// 저장 경로
-					1024 * 1024,	// 1MB	[ 1024 : 1kb / 1024*1024 : 1mb / 1024*1024*1024 : 1GB
+					1024 * 1024 * 1024,	// 1MB	[ 1024 : 1kb / 1024*1024 : 1mb / 1024*1024*1024 : 1GB
 					"UTF-8",
 					new DefaultFileRenamePolicy()	// 5. 업로드된 파일의 이름이 중복일경우 자동으로 이름 변경
 				); // 생성자 end

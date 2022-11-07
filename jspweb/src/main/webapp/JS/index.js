@@ -11,7 +11,7 @@ function getpactive1() {
 			json.forEach(p => {
 				console.log(p.pimg)
 				html += '<div class="item">	<!-- 1개의 제품 -->'+
-'				<a href="#">'+
+'				<a href="/jspweb/product/view.jsp?pno='+p.pno+'">'+
 '					<img src="/jspweb/admin/pimg/'+p.pimg+'">'+
 '				</a>'+
 '				'+

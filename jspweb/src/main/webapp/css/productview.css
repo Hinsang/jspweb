@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+img{
+	width: 100%;
+}
+
+.infobox{	/* 상품정보 박스권 위쪽테두리, 왼쪽 여백 */
+	border-top: 1px solid black;
+	margin-left: 3%;
+}
+.pname{
+	margin-top: 5%;
+	font-family: 'MICEGothic Bold'
+}
+.pcomment{
+	font-size: 9px;
+}
+.pricebox{
+	margin: 5% 0%;
+}
+.pdiscount{ /* 할인율 */
+	font-family: 'MICEGothic Bold';
+	color: red;
+	font-size: 25px;
+	font-weight: bold;
+	padding-right: 3%;
+}
+.pprice{ /* 원가 */
+	text-decoration: line-through; /* 중간 실선 */
+	color: #999999;
+	padding-right: 3%;
+}
+.psale{ /* 판매가 */
+	font-family: 'MICEGothic Bold';
+	color: red;
+	font-size: 25px;
+	font-weight: bold;
+}
+.into_t{
+	margin: 5% 0%;
+	font-size: 15px;
+}
+select{
+	width: 60%;
+	height: 30px;
+	border: 1px solid #999999;
+}
+.select_t{
+	margin: 5% 0%;
+}
+
+.amount_btn{ /* 수량 증가, 감소 버튼 */
+	display: block;
+	background-color: transparent; /* 수량 증가, 감소 버튼 */
+	font-size: 5px;
+	padding: 0px 8px;
+	border: 1px #999999 solid;
+}
+.cancel_btn{ /* 선택 옵션 제거 */
+	background-color: white;
+	font-size: 15px;
+	border: none;
+	padding: 5px;
+}
+.pointbox{
+	font-size: 8px;
+	color: #999999;
+}
+.totalprice{ /* 선택된 옵션의 총 가격 */
+	text-align: right;
+	font-size: 20px;
+	font-family: 'MICEGothic Bold';
+}
+.btnbox{
+	margin: 7% 0%;
+	font-size: 15px;
+}
+.btnbox button{ /* 버튼 목록 안에 있는 button 꾸미기 */
+	background-color: white;
+	border: 1px solid #999999;
+	width: 30%;
+	padding: 20px 10px;
+	margin-right: 2%;
+}
+#btn1{
+	background-color: black;
+	color: white;
+}
+#btn3{
+	color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
